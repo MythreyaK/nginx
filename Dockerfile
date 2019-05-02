@@ -3,7 +3,9 @@
 FROM ubuntu:latest as build-tools
 
 RUN apt update \
-    # > /dev/null \
+    > /dev/null \
+    && apt upgrade -y \
+    > /dev/null \
     && apt install -y \
     g++ \
     gcc \
@@ -89,7 +91,6 @@ ADD https://www.openssl.org/source/openssl-${OPENSSL_VER}.tar.gz    /tmp/openssl
 
 RUN cd /tmp \
     && mkdir -p /tmp/fs \
-    && printf "\n\nStarted Build\n" \
     # Verify checksums
 	&& sha_check=$(( \
 	    $(expr $(sha256sum nginx.tar.gz     | awk '{print $1}') == "$SHA256_NGINX")  && \
@@ -102,15 +103,14 @@ RUN cd /tmp \
 	    printf "SHA CheckSum Faliure! \nStopping build process\n"; \
         exit 1; \
     fi \
-    && printf "Checksums Verified!\n" \
-	&& printf "Extracting...\n\n" \
+    && printf "\n\nChecksums Verified!\n" \
+	&& printf "Extracting...\n" \
 	&& tar -xf nginx.tar.gz \
 	&& tar -xf zlib.tar.gz \
 	&& tar -xf openssl.tar.gz \
 	&& tar -xf pcre.tar.gz \
 	&& cd nginx-${NGINX_VER} \
     # Replace server tokens
-    && ls -al \
 	&& printf "Replacing Server tokens to: $SERVER_NAME/${SERVER_BUILD_VER}\n" \
 	&& sed -i "s/\"Server: nginx\" CRLF/\"Server: $SERVER_NAME\" CRLF/g" "src/http/ngx_http_header_filter_module.c" \
 	&& sed -i "s/\"Server: \" NGINX_VER CRLF/\"Server: \" \"$SERVER_NAME\/$SERVER_BUILD_VER\" CRLF/g" "src/http/ngx_http_header_filter_module.c" \
@@ -118,14 +118,15 @@ RUN cd /tmp \
 	&& printf "Configuring build...\n" \
     # Redirect and run as just ./configure $NGINX_CONFIGURE
     # doesn't seem to be working
+    && printf "Started Build\n" \
 	&& echo "./configure $NGINX_CONFIG" > run.sh \
-    && cat run.sh \
 	&& chmod +x run.sh \
 	&& printf "Building Nginx ${NGINX_VER}\n" \
 	&& ./run.sh > run.log \
 	&& make > make.log \
 	&& make install > makeinst.log \
-	&& printf "Build Complete.\n"
+	&& printf "Build Complete.\n" \
+    && printf "Copying filesystem...\n"
 
 COPY scripts/fs.sh /tmp
 RUN printf "Copying filesystem...\n" \

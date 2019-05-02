@@ -31,19 +31,19 @@ ARG SERVER_BUILD_VER=1.0.0
 ARG NGINX_CONFIG="\
     --user=nginx \
     --group=nginx \
-	--prefix=/tmp/fs/etc/nginx \
-    --sbin-path=/tmp/fs/usr/sbin/nginx \
-	--pid-path=/tmp/fs/var/run/nginx.pid \
-	--lock-path=/tmp/fs/var/run/nginx.lock \
-	--conf-path=/tmp/fs/etc/nginx/nginx.conf \
-	--modules-path=/tmp/fs/usr/lib/nginx/modules \
-	--error-log-path=/tmp/fs/var/log/nginx/error.log \
-	--http-log-path=/tmp/fs/var/log/nginx/access.log \
-	--http-scgi-temp-path=/tmp/fs/var/cache/nginx/scgi_temp \
-	--http-proxy-temp-path=/tmp/fs/var/cache/nginx/proxy_temp \
-	--http-uwsgi-temp-path=/tmp/fs/var/cache/nginx/uwsgi_temp \
-	--http-client-body-temp-path=/tmp/fs/var/cache/nginx/client_temp \
-	--http-fastcgi-temp-path=/tmp/fs/var/cache/nginx/fastcgi_temp \
+	--prefix=/etc/nginx \
+    --sbin-path=/usr/sbin/nginx \
+	--pid-path=/var/run/nginx.pid \
+	--lock-path=/var/run/nginx.lock \
+	--conf-path=/etc/nginx/nginx.conf \
+	--modules-path=/usr/lib/nginx/modules \
+	--error-log-path=/var/log/nginx/error.log \
+	--http-log-path=/var/log/nginx/access.log \
+	--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+	--http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+	--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+	--http-client-body-temp-path=/var/cache/nginx/client_temp \
+	--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
 	--with-pcre-jit \
 	--with-pcre=../pcre-8.43 \
 	--with-zlib=../zlib-1.2.11 \
@@ -129,9 +129,7 @@ RUN cd /tmp \
     && printf "Copying filesystem...\n"
 
 COPY scripts/fs.sh /tmp
-RUN printf "Copying filesystem...\n" \
-    && /tmp/fs.sh \
-    printf "Done"
+RUN /tmp/fs.sh
 # Build complete
 
 
@@ -139,5 +137,5 @@ FROM scratch
 
 COPY --from=build /tmp/fs /
 
-ENTRYPOINT [ "/bin/nginx" ]
+ENTRYPOINT [ "/usr/sbin/nginx" ]
 CMD [ "-g", "daemon off;" ]

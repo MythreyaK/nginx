@@ -27,7 +27,7 @@ RUN apt update \
 FROM build-tools as build
 
 # Set build time vars
-ARG SERVER_NAME=mythreya.dev
+ARG SERVER_NAME=server
 ARG SERVER_BUILD_VER=1.0.0
 
 ARG NGINX_CONFIG="\

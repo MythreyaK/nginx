@@ -69,8 +69,8 @@ ARG NGINX_CONFIG="\
     --with-stream_realip_module \
 	--with-stream_ssl_module \
 	--with-threads \
-    --with-ld-opt='-Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-z,now -fPIC' \
-    --with-cc-opt='-g -O2 -fasynchronous-unwind-tables -fpie -fstack-protector-strong -Wformat -Werror=format-security -fPIC -Wdate-time -D_FORTIFY_SOURCE=2'"
+    --with-ld-opt='-fPIC -fPIE -pie -Wl,-pie -Wl,-z,relro -Wl,-z,now' \
+    --with-cc-opt='-g -O2 -fPIC -fPIE -Wl,-pie -Wdate-time -fstack-protector-strong -fasynchronous-unwind-tables -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2'"
 
 ARG NGINX_VER=1.16.0
 ARG SHA256_NGINX=4fd376bad78797e7f18094a00f0f1088259326436b537eb5af69b01be2ca1345

@@ -140,5 +140,6 @@ FROM scratch
 
 COPY --from=build /tmp/fs /
 
+EXPOSE 80 443
 ENTRYPOINT [ "/usr/sbin/nginx" ]
 CMD [ "-g", "daemon off;" ]

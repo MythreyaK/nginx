@@ -132,7 +132,8 @@ RUN cd /tmp \
     && printf "Copying filesystem...\n"
 
 COPY scripts/fs.sh /tmp
-RUN /tmp/fs.sh
+RUN chmod +x /tmp/fs.sh \
+	&& /tmp/fs.sh
 # Build complete
 
 

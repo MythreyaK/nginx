@@ -41,11 +41,11 @@ ARG NGINX_CONFIG="\
 	--modules-path=/usr/lib/nginx/modules \
 	--error-log-path=/var/log/nginx/error.log \
 	--http-log-path=/var/log/nginx/access.log \
-	--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-	--http-proxy-temp-path=/var/cache/nginx/proxy_temp \
-	--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
-	--http-client-body-temp-path=/var/cache/nginx/client_temp \
-	--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+	--http-scgi-temp-path=/var/cache/nginx/scgi \
+	--http-proxy-temp-path=/var/cache/nginx/proxy \
+	--http-uwsgi-temp-path=/var/cache/nginx/uwsgi \
+	--http-client-body-temp-path=/var/cache/nginx/client \
+	--http-fastcgi-temp-path=/var/cache/nginx/fastcgi \
 	--with-pcre-jit \
 	--with-pcre=../pcre-8.43 \
 	--with-zlib=../zlib-1.2.11 \

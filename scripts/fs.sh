@@ -4,7 +4,7 @@
 mkdir -p /tmp/fs/var/run
 mkdir -p /tmp/fs/usr/lib/nginx
 mkdir -p /tmp/fs/var/log/nginx
-mkdir -p /tmp/fs/var/cache/nginx/{scgi_temp,proxy_temp,uwsgi_temp,client_temp,fastcgi_temp}
+mkdir -p /tmp/fs/var/cache/nginx/{scgi,proxy,uwsgi,client,fastcgi}
 
 # Copy every library that this binary is using
 rsync -qakRL $(ldd /usr/sbin/nginx | awk 'NF == 4 {print $3}; NF == 2 {print $1}' ) /tmp/fs/ &> /dev/null

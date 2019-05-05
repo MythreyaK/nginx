@@ -16,6 +16,10 @@ rsync -qakRL /usr/sbin/nginx/  /tmp/fs/
 echo "nginx:x:7000:7000:nginx user,,,:/nonexistent:/bin/false" > /tmp/fs/etc/passwd
 echo "nginx:x:7000:" > /tmp/fs/etc/group
 
+# Redirect logs to docker log collector
+ln -sf /dev/stderr /tmp/fs/var/log/nginx/error.log
+ln -sf /dev/stdout /tmp/fs/var/log/nginx/access.log
+
 # Libs like linux-vdso.so.1 cannot be copied
 # as they are virtual and exist only in the
 # kernel, so rsync throws error. Manually exit

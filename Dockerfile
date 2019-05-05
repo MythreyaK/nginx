@@ -6,7 +6,7 @@ RUN apt update \
     > /dev/null \
     && apt upgrade -y \
     > /dev/null \
-    && apt install -y \
+    && apt install -y --no-install-recommends \
     g++ \
     gcc \
     make \
@@ -117,7 +117,8 @@ RUN cd /tmp \
     && printf "Replacing Server tokens to: $SERVER_NAME/${SERVER_BUILD_VER}\n" \
     && sed -i "s/\"Server: nginx\" CRLF/\"Server: $SERVER_NAME\" CRLF/g" "src/http/ngx_http_header_filter_module.c" \
     && sed -i "s/\"Server: \" NGINX_VER CRLF/\"Server: $SERVER_NAME\/$SERVER_BUILD_VER\" CRLF/g" "src/http/ngx_http_header_filter_module.c" \
-    # && sed -i "s/\"Server: \" NGINX_VER_BUILD CRLF/\"Server: $SERVER_NAME\/$SERVER_BUILD_VER\" CRLF/g" "src/http/ngx_http_header_filter_module.c" \
+    && sed -i "s/NGINX_VER_BUILD/\"$SERVER_NAME\/$SERVER_BUILD_VER\"/g" "src/http/v2/ngx_http_v2_filter_module.c" \
+    && sed -i "s/NGINX_VER/\"$SERVER_NAME\/$SERVER_BUILD_VER\"/g" "src/http/v2/ngx_http_v2_filter_module.c" \
     && printf "Configuring build...\n" \
     # Redirect and run as just ./configure $NGINX_CONFIGURE
     # doesn't seem to be working

@@ -1,0 +1,24 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  tags:
+    include:
+      - v*
+
+steps:
+- script: |
+    # Get the tag of the commit that triggered the build
+    echo "##vso[task.setvariable variable=docker_tag]$(git describe --tags $GIT_COMMIT)"
+- bash: | 
+    echo "Setting tag as ${DOCKER_TAG:1}"
+    docker build -t $DOCKER_UNAME/nginx:${DOCKER_TAG:1} .
+    echo $DOCKER_PASSWD | docker login --username $DOCKER_UNAME --password-stdin
+    docker push $DOCKER_UNAME/nginx:${DOCKER_TAG:1}
+    rm /home/vsts/.docker/config.json
+  env:
+    DOCKER_UNAME: $(docker-uname)
+    DOCKER_PASSWD: $(docker-passwd)
+    GIT_COMMIT: $(Build.SourceVersion)

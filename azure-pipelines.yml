@@ -9,6 +9,10 @@ trigger:
     include:
       - master
       - dev
+  paths:
+    exclude:
+      - README.md
+      - azure-pipelines.yml
 
 steps:
 - script: |

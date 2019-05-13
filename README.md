@@ -1,4 +1,6 @@
-# NGINX
+# NGINX  
+[![Build Status](https://pink-panther98.visualstudio.com/Nginx/_apis/build/status/MythreyaK.nginx?branchName=master)](https://pink-panther98.visualstudio.com/Nginx/_build/latest?definitionId=5&branchName=master)
+
 A minimal NGINX image compiled with security flags and TLS 1.3 support for 
 fast and secure docker containers. Built with most modules nginx supports. 
 Final docker image size with libraries is ~22MB. 

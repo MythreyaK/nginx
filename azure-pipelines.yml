@@ -5,6 +5,9 @@ trigger:
   tags:
     include:
       - v*
+  branches:
+    include:
+      - master
 
 steps:
 - script: |

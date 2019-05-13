@@ -28,5 +28,5 @@ DockerHub image uses a generic `server/1.0` token. </sub>
 To build the docker image yourself, just clone this repo and run 
 `docker build -t <name:tag>` and `docker run -p <host:container> <name:tag>`.  
 
-A DockerHub image will be added soon, allowing you to just `docker pull` and
-easily use this as a base image for your website.
+A Docker image is available at `mythreyak/nginx` on [Docker Hub](https://hub.docker.com/r/mythreyak/nginx). 
+Pull the image with `docker pull mythreyak/nginx:<tag>`.

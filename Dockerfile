@@ -7,11 +7,9 @@ RUN apt update \
     && apt upgrade -y \
     > /dev/null \
     && apt install -y --no-install-recommends \
-    g++ \
-    gcc \
-    make \
     file \
     perl \
+    cmake \
     rsync \
     libgd3 \
     libgd-dev \
@@ -19,7 +17,7 @@ RUN apt update \
     libgeoip1 \
     libperl-dev \
     libgeoip-dev \
-    linux-headers-generic \
+    build-essential \
     > /dev/null
 # Build
 

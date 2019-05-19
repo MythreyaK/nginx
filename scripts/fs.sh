@@ -7,6 +7,7 @@ mkdir -p /tmp/fs/var/log/nginx
 mkdir -p /tmp/fs/var/cache/nginx/{scgi,proxy,uwsgi,client,fastcgi}
 
 # Copy every library that this binary is using
+mv    /usr/local/lib/libgd.so                           /usr/lib/x86_64-linux-gnu/
 rsync -qakRL $(ldd /usr/sbin/nginx | awk 'NF == 4 {print $3}; NF == 2 {print $1}' ) /tmp/fs/ &> /dev/null
 rsync -qakRL /etc/nginx/       /tmp/fs/
 rsync -qakRL /lib/*/libnss*    /tmp/fs/

@@ -13,10 +13,12 @@ RUN apt update \
     file \
     perl \
     rsync \
-    libgd3 \
-    libgd-dev \
     geoip-bin \
     libgeoip1 \
+    libpng-dev \
+    libjpeg-dev \
+    libtiff-dev \
+    libwebp-dev \
     libperl-dev \
     libgeoip-dev \
     linux-headers-generic \
@@ -87,10 +89,14 @@ ARG SHA256_ZLIB=c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1
 ARG OPENSSL_VER=1.1.1b
 ARG SHA256_OPENSSL=5c557b023230413dfb0756f3137a13e6d726838ccd1430888ad15bfb2b43ea4b
 
+ARG LIBGD_VER=2.2.5
+ARG SHA256_LIBGD=a66111c9b4a04e818e9e2a37d7ae8d4aae0939a100a36b0ffb52c706a09074b5
+
 ADD https://nginx.org/download/nginx-${NGINX_VER}.tar.gz            /tmp/nginx.tar.gz
 ADD https://ftp.pcre.org/pub/pcre/pcre-${PCRE_VER}.tar.gz           /tmp/pcre.tar.gz
 ADD https://www.zlib.net/zlib-${ZLIB_VER}.tar.gz                    /tmp/zlib.tar.gz
 ADD https://www.openssl.org/source/openssl-${OPENSSL_VER}.tar.gz    /tmp/openssl.tar.gz
+ADD https://github.com/libgd/libgd/releases/download/gd-${LIBGD_VER}/libgd-${LIBGD_VER}.tar.gz    /tmp/libgd.tar.gz
 
 RUN cd /tmp \
     && mkdir -p /tmp/fs \
@@ -99,6 +105,7 @@ RUN cd /tmp \
         $(expr $(sha256sum nginx.tar.gz     | awk '{print $1}') == "$SHA256_NGINX")  && \
         $(expr $(sha256sum pcre.tar.gz      | awk '{print $1}') == "$SHA256_PCRE")   && \
         $(expr $(sha256sum zlib.tar.gz      | awk '{print $1}') == "$SHA256_ZLIB")   && \
+        $(expr $(sha256sum libgd.tar.gz     | awk '{print $1}') == "$SHA256_LIBGD")  && \
         $(expr $(sha256sum openssl.tar.gz   | awk '{print $1}') == "$SHA256_OPENSSL")   \
     )) \
     && if [ $sha_check != 1 ]; \
@@ -112,7 +119,16 @@ RUN cd /tmp \
     && tar -xf zlib.tar.gz \
     && tar -xf openssl.tar.gz \
     && tar -xf pcre.tar.gz \
-    && cd nginx-${NGINX_VER} \
+    && tar -xf libgd.tar.gz \
+    # Build libgd
+    && cd /tmp/libgd-${LIBGD_VER} \
+    && mkdir build \
+    && cd build \
+    && cmake -DENABLE_PNG=1 -DENABLE_JPEG=1 -DENABLE_TIFF=1 -DENABLE_WEBP=1 .. \
+    && make > mk.log \
+    && make install > mki.log \
+    # Start NGINX build
+    && cd /tmp/nginx-${NGINX_VER} \
     # Replace server tokens
     && printf "Replacing Server tokens to: $SERVER_NAME/${SERVER_BUILD_VER}\n" \
     && sed -i "s/\"Server: nginx\" CRLF/\"Server: $SERVER_NAME\" CRLF/g" "src/http/ngx_http_header_filter_module.c" \

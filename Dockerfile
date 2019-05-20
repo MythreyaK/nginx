@@ -7,12 +7,9 @@ RUN apt update \
     && apt upgrade -y \
     > /dev/null \
     && apt install -y --no-install-recommends \
-    g++ \
-    gcc \
-    make \
-    cmake \
     file \
     perl \
+    cmake \
     rsync \
     geoip-bin \
     libgeoip1 \
@@ -22,7 +19,7 @@ RUN apt update \
     libwebp-dev \
     libperl-dev \
     libgeoip-dev \
-    linux-headers-generic \
+    build-essential \
     > /dev/null
 # Build
 

@@ -10,6 +10,7 @@ RUN apt update \
     g++ \
     gcc \
     make \
+    cmake \
     file \
     perl \
     rsync \

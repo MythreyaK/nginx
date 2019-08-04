@@ -19,7 +19,7 @@ DockerHub image uses a generic `server/1.0` token. </sub>
 |Package|Version|
 |---|---|
 |NGINX|`1.16.0`|
-|OpenSSL|`1.1.1.b`|  
+|OpenSSL|`1.1.1.c`|  
 |PCRE|`8.43`|
 |Zlib|`1.2.11`|
 |LibGD|`2.2.5`|

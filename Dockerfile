@@ -49,7 +49,7 @@ ARG NGINX_CONFIG="\
     --with-pcre-jit \
     --with-pcre=../pcre-8.43 \
     --with-zlib=../zlib-1.2.11 \
-    --with-openssl=../openssl-1.1.1b \
+    --with-openssl=../openssl-1.1.1c \
     --with-debug \
     --with-compat \
     --with-file-aio \
@@ -85,8 +85,8 @@ ARG SHA256_PCRE=0b8e7465dc5e98c757cc3650a20a7843ee4c3edf50aaf60bb33fd879690d2c73
 ARG ZLIB_VER=1.2.11
 ARG SHA256_ZLIB=c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1
 
-ARG OPENSSL_VER=1.1.1b
-ARG SHA256_OPENSSL=5c557b023230413dfb0756f3137a13e6d726838ccd1430888ad15bfb2b43ea4b
+ARG OPENSSL_VER=1.1.1c
+ARG SHA256_OPENSSL=f6fb3079ad15076154eda9413fed42877d668e7069d9b87396d0804fdb3f4c90
 
 ARG LIBGD_VER=2.2.5
 ARG SHA256_LIBGD=a66111c9b4a04e818e9e2a37d7ae8d4aae0939a100a36b0ffb52c706a09074b5

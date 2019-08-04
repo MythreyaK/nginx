@@ -7,12 +7,13 @@ mkdir -p /tmp/fs/var/log/nginx
 mkdir -p /tmp/fs/var/cache/nginx/{scgi,proxy,uwsgi,client,fastcgi}
 
 # Copy every library that this binary is using
-mv    /usr/local/lib/libgd.so                           /usr/lib/x86_64-linux-gnu/
-rsync -qakRL /lib/*/libnss*                             /tmp/fs/
-rsync -qakRL /lib/x86_64-linux-gnu/ld-2.27.so           /tmp/fs/
-rsync -qakRL /lib/x86_64-linux-gnu/libnsl-2.27.so       /tmp/fs/
-rsync -qakRL /lib/x86_64-linux-gnu/libresolv-2.27.so    /tmp/fs/
+mv    /usr/local/lib/libgd.so                    /usr/lib/x86_64-linux-gnu/
+rsync -qakRl /lib/*/libnss_[c,d]*                /tmp/fs/
+rsync -qakRl /lib/x86_64-linux-gnu/ld*           /tmp/fs/
+rsync -qakRl /lib/x86_64-linux-gnu/libnsl*       /tmp/fs/
+rsync -qakRl /lib/x86_64-linux-gnu/libresolv*    /tmp/fs/
 rsync -qakRL $(ldd /usr/sbin/nginx | awk 'NF == 4 {print $3}; NF == 2 {print $1}' ) /tmp/fs/ &> /dev/null
+rsync -qakRl $(ldd /usr/sbin/nginx | awk 'NF == 4 {print $3}; NF == 2 {print $1}' ) /tmp/fs/ &> /dev/null
 
 rsync -qakRL /etc/nginx/       /tmp/fs/
 rsync -qakRL /usr/sbin/nginx/  /tmp/fs/

@@ -76,8 +76,8 @@ ARG NGINX_CONFIG="\
     --with-ld-opt='-fPIC -fPIE -pie -Wl,-pie -Wl,-z,relro -Wl,-z,now' \
     --with-cc-opt='-g -O2 -fPIC -fPIE -Wl,-pie -Wdate-time -fstack-protector-strong -fasynchronous-unwind-tables -Wformat -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2'"
 
-ARG NGINX_VER=1.16.0
-ARG SHA256_NGINX=4fd376bad78797e7f18094a00f0f1088259326436b537eb5af69b01be2ca1345
+ARG NGINX_VER=1.16.1
+ARG SHA256_NGINX=f11c2a6dd1d3515736f0324857957db2de98be862461b5a542a3ac6188dbe32b
 
 ARG PCRE_VER=8.43
 ARG SHA256_PCRE=0b8e7465dc5e98c757cc3650a20a7843ee4c3edf50aaf60bb33fd879690d2c73
